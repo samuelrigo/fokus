@@ -21,14 +21,17 @@ let intervaloId
 let timeInSeconds = 1500
 
 focoButton.addEventListener('click', () => {
+    timeInSeconds = 1500
     changeContext('foco')
     focoButton.classList.add('active')
 })
 curtoButton.addEventListener('click', () => {
+    timeInSeconds = 300
     changeContext('descanso-curto')
     curtoButton.classList.add('active')
 })
 longoButton.addEventListener('click', () => {
+    timeInSeconds = 900
     changeContext('descanso-longo')
     longoButton.classList.add('active')
 })
@@ -42,6 +45,7 @@ inputMusicFocus.addEventListener('change', () => {
 })
 
 function changeContext(contexto){
+    showTime()
     botoes.forEach(function(contexto){
         contexto.classList.remove('active')
     })
@@ -72,7 +76,7 @@ function changeContext(contexto){
 
 const contagemRegressiva = () => {
     if(timeInSeconds <= 0){
-        // beepSound.play()
+        beepSound.play()
         console.log('Tempo finalizado!')
         zerar()
         return
@@ -102,7 +106,8 @@ function zerar(){
 }
 
 function showTime() { 
-    const time = timeInSeconds
-    timeOnScreen.innerHTML = `${time}`
+    const time = new Date(timeInSeconds * 1000)
+    const formattedTime = time.toLocaleTimeString('pt-Br', {minute: '2-digit', second: '2-digit'})
+    timeOnScreen.innerHTML = `${formattedTime}`
 }
 showTime()
