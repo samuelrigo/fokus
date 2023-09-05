@@ -11,6 +11,9 @@ music.loop = true
 let timeInSeconds = 5
 const startPauseButton = document.querySelector('#start-pause')
 let intervaloId
+const playSound = new Audio ('./sons/play.wav')
+const pauseSound = new Audio ('./sons/pause.mp3')
+const beepSound = new Audio ('./sons/beep.mp3')
 
 focoButton.addEventListener('click', () => {
     changeContext('foco')
@@ -64,8 +67,9 @@ function changeContext(contexto){
 
 const contagemRegressiva = () => {
     if(timeInSeconds <= 0){
+        beepSound.play()
+        console.log('Tempo finalizado!')
         zerar()
-        alert('Tempo finalizado!')
         return
     }
     timeInSeconds -= 1
@@ -76,9 +80,11 @@ startPauseButton.addEventListener('click', iniciarOuPausar )
 
 function iniciarOuPausar(){
     if(intervaloId){
+        pauseSound.play()
         zerar()
         return
     }
+    playSound.play()
     intervaloId = setInterval(contagemRegressiva, 1000)
 }
 function zerar(){
